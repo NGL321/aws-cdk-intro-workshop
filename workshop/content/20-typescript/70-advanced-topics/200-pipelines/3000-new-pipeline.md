@@ -61,7 +61,7 @@ export class WorkshopPipelineStack extends cdk.Stack {
 The above code does several things:
 
 * `sourceArtifact`/`cloudAssemblyArtifact`: These will store our source code and [cloud assembly](https://docs.aws.amazon.com/cdk/latest/guide/apps.html#apps_cloud_assembly) respectively
-* `new CdkPipeline(...)`: This initializes the pipeline with the required values. This will serve as the base component moving forward. Every pipeline requires at bare minimum:
+* `new CdkPipeline(...)`: This initializes the pipeline with the required values. This will serve as the base component moving forward. Every pipeline requires at bare minimum a source action and a synth action.
     * `CodeCommitSourceAction(...)`: The `sourceAction` of the pipeline will check the designated repository for source code and generate an artifact.
     * `SimpleSynthAction.standardNpmSynth`: The `synthAction` of the pipeline will take the source artifact generated in by the `sourceAction` and build the application based on the `buildCommand`. This is always followed by `npx cdk synth`
 
@@ -73,7 +73,7 @@ git commit -am "MESSAGE" && git push
 npx cdk deploy
 ```
 
-CdkPipelines auto-update for each commit in a source repoh, so this is is the *last time* we will need to execute this command!
+CdkPipelines auto-update for each commit in a source repo, so this is is the *last time* we will need to execute this command!
 
 Once deployment is finished, you can go to the [CodePipeline console](https://console.aws.amazon.com/codesuite/codepipeline/pipelines) and you will see a new pipeline! If you navigate to it, it should look like this:
 

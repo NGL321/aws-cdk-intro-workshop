@@ -18,6 +18,8 @@ same level as `bin` and `lib` and then create a file called `hitcounter.test.ts`
 ```typescript
 import { expect as expectCDK, haveResource } from '@aws-cdk/assert';
 import cdk = require('@aws-cdk/core');
+import * as lambda from '@aws-cdk/aws-lambda';
+
 import { HitCounter }  from '../lib/hitcounter';
 
 test('DynamoDB Table Created', () => {
@@ -27,7 +29,7 @@ test('DynamoDB Table Created', () => {
     downstream:  new lambda.Function(stack, 'TestFunction', {
       runtime: lambda.Runtime.NODEJS_10_X,
       handler: 'lambda.handler',
-      code: lambda.Code.inline('test')
+      code: lambda.Code.fromInline('test')
     })
   });
   // THEN
@@ -73,7 +75,7 @@ environment variable values were references to other constructs.
 this.handler = new lambda.Function(this, 'HitCounterHandler', {
   runtime: lambda.Runtime.NODEJS_10_X,
   handler: 'hitcounter.handler',
-  code: lambda.Code.asset('lambda'),
+  code: lambda.Code.from_asset('lambda'),
   environment: {
     DOWNSTREAM_FUNCTION_NAME: props.downstream.functionName,
     HITS_TABLE_NAME: table.tableName
@@ -95,7 +97,7 @@ test('Lambda Has Environment Variables', () => {
     downstream:  new lambda.Function(stack, 'TestFunction', {
       runtime: lambda.Runtime.NODEJS_10_X,
       handler: 'lambda.handler',
-      code: lambda.Code.inline('test')
+      code: lambda.Code.fromInline('test')
     })
   });
   // THEN
@@ -177,7 +179,7 @@ test('Lambda Has Environment Variables', () => {
     downstream:  new lambda.Function(stack, 'TestFunction', {
       runtime: lambda.Runtime.NODEJS_10_X,
       handler: 'lambda.handler',
-      code: lambda.Code.inline('test')
+      code: lambda.Code.fromInline('test')
     })
   });
   // THEN
@@ -234,7 +236,7 @@ test('DynamoDB Table Created With Encryption', () => {
     downstream:  new lambda.Function(stack, 'TestFunction', {
       runtime: lambda.Runtime.NODEJS_10_X,
       handler: 'lambda.handler',
-      code: lambda.Code.inline('test')
+      code: lambda.Code.fromInline('test')
     })
   });
   // THEN
